@@ -54,6 +54,7 @@ router.get("/article/:name", ({ set, params }) => {
     return baseHtml
         .replace("{{title}}", article.title)
         .replace("{{meta_title}}", article.title)
+        .replace(/{{meta_image}}/g, `https://blog.northernsi.de${article.meta_image}` ?? "https://blog.northernsi.de/media/meta.webp")
         .replace("{{content}}", mdToHtml(article));
 });
 
