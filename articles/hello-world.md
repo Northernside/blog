@@ -1,3 +1,8 @@
+<!--
+published: 30/05/2024 17:21:00
+meta_image: /media/meta.webp
+-->
+
 # Hello, World!
 
 This is a test article. It's a markdown file located in the `articles` directory.

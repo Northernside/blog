@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { Elysia } from "elysia";
 
 import type { Article, EightyEightByThirtyOne } from "./types";
-import { initializeBlogPosts } from "./misc/articles";
+import { articlesToRss, initializeBlogPosts } from "./misc/articles";
 import { load88x31s, load88x31sHtml } from "./misc/88x31";
 import { mdToHtml, mdToLiteHtml } from "./misc/markdown";
 
@@ -22,7 +22,7 @@ router.get("/", ({ set }) => {
     set.headers["Content-Type"] = "text/html";
 
     const articles = blogPosts.map((article) =>
-        `<div><a href="/article/${article.url_name}">${article.title}</a><br>${mdToLiteHtml(article.content.slice(0, 256))}...</div>`
+        `<div><div class="title-container"><a href="/article/${article.url_name}">${article.title}</a><span>(published ${new Date(article.published).toLocaleDateString()})</span></div><br>${mdToLiteHtml(article.content.slice(0, 256))}...</div>`
     ).join("");
 
     return homeHtml.replace("{{articles}}", articles).replace("{{88x31s}}", eightyEightByThirtyOnesHtml);
@@ -54,7 +54,7 @@ router.get("/article/:name", ({ set, params }) => {
     return baseHtml
         .replace("{{title}}", article.title)
         .replace("{{meta_title}}", article.title)
-        .replace("{{content}}", mdToHtml(article.content));
+        .replace("{{content}}", mdToHtml(article));
 });
 
 router.get("/media/:name", ({ set, params }) => {
@@ -63,11 +63,22 @@ router.get("/media/:name", ({ set, params }) => {
     if (!fs.existsSync(filePath)) { set.status = 404; set.headers["Content-Type"] = "text/html"; return notFoundHtml; }
 
     set.headers["Content-Type"] = `image/${filePath.split(".").pop()}`;
-    
+
     if (imagesCache[filePath]) return imagesCache[filePath];
 
     imagesCache[filePath] = fs.readFileSync(filePath);
     return imagesCache[filePath];
+});
+
+router.get("/rss.xml", ({ set }) => {
+    set.headers["Content-Type"] = "application/xml";
+    return articlesToRss(blogPosts);
+});
+
+router.get("/*", ({ set }) => {
+    set.status = 404;
+    set.headers["Content-Type"] = "text/html";
+    return notFoundHtml;
 });
 
 router.listen({

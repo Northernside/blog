@@ -1,5 +1,7 @@
-export function mdToHtml(md: string): string {
-    md = md.replace(/\r\n/g, "\n");
+import type { Article } from "../types";
+
+export function mdToHtml(article: Article): string {
+    let md = article.content.replace(/\r\n/g, "\n");
 
     return md
         // Heading
@@ -21,7 +23,7 @@ export function mdToHtml(md: string): string {
         .replace(/`(.+?)`/g, "<code>$1</code>")
 
         // Images and links
-        .replace(/!\[(.+?)\]\((.+?)\)/g, "<div><img src=\"$2\" alt=\"$1\"></div>")
+        .replace(/!\[(.+?)\]\((.+?)\)/g, "<div><img src=\"$2\" alt=\"$1\" style=\"width: 100%; height: auto; border-radius: 10px;\"></div>")
         .replace(/\[(.+?)\]\((.+?)\)/g, "<a href=\"$2\">$1</a>")
 
         // Quotes
@@ -29,6 +31,12 @@ export function mdToHtml(md: string): string {
 
         // if one line is empty, it's a new paragraph
         .replace(/\n\n/g, "<p></p>")
+
+        .replace(/<h1>(.+?)<\/h1>/,
+            `<h1 style="margin-bottom: -10px;">$1</h1>
+            <span style="color: gray;">published ${new Date(article.published).toLocaleDateString()}</span>
+            <img src="${article.meta_image}" alt="Meta image" style="width: 100%; height: auto; margin-top: 10px; border-radius: 10px;">
+        `)
 }
 
 export function mdToLiteHtml(md: string): string {
