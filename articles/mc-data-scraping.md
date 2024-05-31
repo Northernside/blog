@@ -9,7 +9,7 @@ meta_image: /media/mc-data-scraping-thumbnail.png
 In essence, Minecraft accounts are stored in a database and can be accessed through the Mojang API. This API returns data such as the account’s UUID, username, current skin and cape. In order to access this data, you can either input the username or UUID of the account you want the data for.
 
 ## The Idea
-If you're interested in collecting data, especially personal data then you've come to the right place!
+If you're interested in collecting data, especially personal data, you're in the right place.
 Collecting data about Minecraft profiles isn't just some random stuff that will end up on your old and dusty HDD. People like me actually use this data to create cool stuff like statistics, search for newly released (or even yet unknown 👀) capes, and generally... for spending the rest of your free time.
 
 There isn't a great amount of information about this topic yet, as there are only a few people doing this. However, I'm here to help! I'm going to show you how to scrape Minecraft profiles and get all the data you need. This will help me bring my yapping to a concrete form of text.
