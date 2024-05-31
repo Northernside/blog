@@ -15,6 +15,7 @@ const homeHtml = fs.readFileSync("./html/home.html", "utf-8");
 const baseHtml = fs.readFileSync("./html/base.html", "utf-8");
 const notFoundHtml = fs.readFileSync("./html/404.html", "utf-8");
 
+const cliArgs = process.argv.slice(2);
 const router = new Elysia();
 
 /* Home */
@@ -86,3 +87,18 @@ router.listen({
     hostname: Bun.env.HOSTNAME ?? "127.0.0.1",
     port: Bun.env.PORT ?? 3000,
 });
+
+if (cliArgs.includes("--watch")) {
+    console.log("Watching for changes...");
+
+    fs.watch("./articles", () => {
+        console.log("Reloading articles...");
+        blogPosts = initializeBlogPosts();
+    });
+
+    fs.watch("./88x31", () => {
+        console.log("Reloading 88x31s...");
+        eightyEightByThirtyOnes = load88x31s();
+        eightyEightByThirtyOnesHtml = load88x31sHtml();
+    });
+}

@@ -16,7 +16,7 @@ export function initializeBlogPosts(): Article[] {
             meta_image: meta.meta_image ?? "/media/meta.webp",
             content: content.replace(/<!--\n([\s\S]+)\n-->/, "") ?? "No content found",
         };
-    });
+    }).sort((a, b) => b.published - a.published);
 }
 
 export function articlesToRss(articles: Article[]): string {
