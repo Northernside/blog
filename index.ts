@@ -84,7 +84,6 @@ router.get("/media/:name", ({ set, params }) => {
 router.get("/statistics", ({ set }) => {
     set.headers["Content-Type"] = "text/html";
 
-    console.log(getAllArticleViews());
     const stats = Object.keys(getAllArticleViews()).sort((a, b) => getAllArticleViews()[b] - getAllArticleViews()[a]).map((articleId) => {
         const article = blogPosts.find((article) => article.url_name === articleId);
         return `<div><p>${getAllArticleViews()[articleId]} views - <a href="/article/${articleId}">${article?.title}</a></p></div>`;
