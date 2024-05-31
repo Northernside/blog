@@ -59,6 +59,8 @@ Scraping Minecraft profiles is a fun and interesting thing to do. It's not just 
 
 I hope you enjoyed reading this article. If you have any questions or feedback, feel free to reach out to me on Discord [@northernsidepng](https://discord.com/users/434417514332815370) or via E-Mail [contact@northernsi.de](mailto:contact@northernsi.de). I'm always happy to help and answer your questions.
 
+All in all, my current amount of scraped profiles is around 61.5 million. Doing some calculations, you'll find out that there are about 62.5 to 63 million Minecraft accounts in total. This means that I've scraped about 97.6% of all Minecraft accounts, which is a huge number.
+
 Have a great day and happy scraping!
 
 *P.S.: Make sure to check out my friend's blog post as well: [How to Make a List of Nearly Every Minecraft Player](https://matdoes.dev/minecraft-uuids) by [matdoesdev](https://matdoes.dev).*
