@@ -3,9 +3,12 @@ import type { Article } from "../types";
 export function mdToHtml(article: Article): string {
     let md = article.content.replace(/\r\n/g, "\n");
 
-    return md
+    let html = md
         // Heading
-        .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+        .replace(/^# (.+)$/gm, `<h1 style="margin-bottom: -25px;">$1</h1>
+            <span style="color: gray;">published ${new Date(article.published).toLocaleDateString()}</span>
+            <img src="${article.meta_image}" alt="Meta image" style="width: 100%; height: auto; margin-top: 20px; border-radius: 10px;">
+        `)
         .replace(/^## (.+)$/gm, "<h2>$1</h2>")
         .replace(/^### (.+)$/gm, "<h3>$1</h3>")
         .replace(/^#### (.+)$/gm, "<h4>$1</h4>")
@@ -30,14 +33,17 @@ export function mdToHtml(article: Article): string {
         .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
 
         // if one line is empty, it's a new paragraph
-        .replace(/\n\n/g, "<p></p>")
+        .replace(/\n\n/g, "</p><p>");
 
-        .replace(/<h1>(.+?)<\/h1>/,
-            `<h1 style="margin-bottom: -10px;">$1</h1>
-            <span style="color: gray;">published ${new Date(article.published).toLocaleDateString()}</span>
-            <img src="${article.meta_image}" alt="Meta image" style="width: 100%; height: auto; margin-top: 10px; border-radius: 10px;">
-        `)
+    html = html.split('\n').map(line => {
+        if (!line.match(/^<h[1-6]>/) && !line.match(/^<\/?blockquote>/) && !line.match(/^<\/?pre>/) && !line.match(/^<\/?div>/) && !line.match(/<span/) && !line.match(/<img/))
+            return `<p>${line}</p>`;
+        return line;
+    }).join('');
+
+    return html;
 }
+
 
 export function mdToLiteHtml(md: string): string {
     md = md.replace(/\r\n/g, "\n");

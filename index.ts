@@ -15,6 +15,7 @@ let pageIpCache: { [key: string]: string[] } = {};
 
 const homeHtml = fs.readFileSync("./html/home.html", "utf-8");
 const baseHtml = fs.readFileSync("./html/base.html", "utf-8");
+const statisticsHtml = fs.readFileSync("./html/stats.html", "utf-8");
 const notFoundHtml = fs.readFileSync("./html/404.html", "utf-8");
 
 const cliArgs = process.argv.slice(2);
@@ -78,6 +79,20 @@ router.get("/media/:name", ({ set, params }) => {
 
     imagesCache[filePath] = fs.readFileSync(filePath);
     return imagesCache[filePath];
+});
+
+router.get("/statistics", ({ set }) => {
+    set.headers["Content-Type"] = "text/html";
+
+    console.log(getAllArticleViews());
+    const stats = Object.keys(getAllArticleViews()).sort((a, b) => getAllArticleViews()[b] - getAllArticleViews()[a]).map((articleId) => {
+        const article = blogPosts.find((article) => article.url_name === articleId);
+        return `<div><p>${getAllArticleViews()[articleId]} views - <a href="/article/${articleId}">${article?.title}</a></p></div>`;
+    }).join("");
+
+    return statisticsHtml
+        .replace("{{stats}}", stats)
+        .replace("{{88x31s}}", eightyEightByThirtyOnesHtml);
 });
 
 router.get("/rss.xml", ({ set }) => {
