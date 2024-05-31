@@ -39,7 +39,8 @@ export function articlesToRss(articles: Article[]): string {
 }
 
 function getMedata(content: string): { [key: string]: string } {
-    const meta = content.match(/<!--\n([\s\S]+)\n-->/)?.[1] ?? "";
+    let _content = content.replace(/\r\n/g, "\n");
+    let meta = _content.match(/<!--\n([\s\S]+)\n-->/)?.[1] ?? "";
     return meta.split("\n").reduce((acc, line) => {
         const [key, value] = line.split(": ");
         acc[key] = value;
