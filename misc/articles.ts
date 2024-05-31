@@ -14,7 +14,7 @@ export function initializeBlogPosts(): Article[] {
             title: content.match(/^# (.+)$/m)?.[1] ?? "Untitled",
             published: convertTime(meta.published) ?? 0,
             meta_image: meta.meta_image ?? "/media/meta.webp",
-            content: content.replace(/<!--\n([\s\S]+)\n-->/, "") ?? "No content found",
+            content: content.replace(/<!--\r?\n([\s\S]+)\r?\n-->/, "") ?? "No content found",
         };
     }).sort((a, b) => b.published - a.published);
 }
@@ -39,8 +39,9 @@ export function articlesToRss(articles: Article[]): string {
 }
 
 function getMedata(content: string): { [key: string]: string } {
-    const meta = content.match(/<!--\n([\s\S]+)\n-->/)?.[1] ?? "";
-    return meta.split("\n").reduce((acc, line) => {
+    let meta = content.match(/<!--\r?\n([\s\S]+)\r?\n-->/)?.[1] ?? "";
+
+    return meta.replaceAll("\r\n", "\n").split("\n").reduce((acc, line) => {
         const [key, value] = line.split(": ");
         acc[key] = value;
         return acc;
