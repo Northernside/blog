@@ -8,9 +8,15 @@ meta_image: /media/mc-data-scraping-thumbnail.png
 ## Context
 In essence, Minecraft accounts are stored in a database and can be accessed through the Mojang API. This API returns data such as the account’s UUID, username, current skin and cape. In order to access this data, you can either input the username or UUID of the account you want the data for.
 
+A so called "API endpoint" is a URL that you can send a request to and get a response from. The Mojang API has a few endpoints, but the most important ones are the `api.mojang.com/users/profiles/minecraft/:username` and `sessionserver.mojang.com/session/minecraft/profile/:uuid` endpoints. The first one returns the UUID of the account with the given username and the second one returns the profile data of the account with the given UUID.
+
+Beyond that, there are also [a few endpoints](https://wiki.vg/Mojang_API) which can speed up the scraping progress, but you need to figure that out for yourself ;)
+
 ## The Idea
 If you're interested in collecting data, especially personal data, you're in the right place.
 Collecting data about Minecraft profiles isn't just some random stuff that will end up on your old and dusty HDD. People like me actually use this data to create cool stuff like statistics, search for newly released (or even yet unknown 👀) capes, and generally... for spending the rest of your free time.
+
+My goal is to collect as many profiles as possible. But how do I utilize my resources, should I just bruteforce some UUIDs? No, not at all, if you do the math you'll know that this is a pretty stupid idea. Since the whole idea is based on data collection, you could guess that this is one of my favorite things to do. There are currently 5x1TB hard drives laying around in my room, and most of them are filled with a bunch of data breaches (*FYI: it's not illegal to collect data breaches*). These breaches usually contain long lists of usernames from various sources and websites. My attempt to collect as many profiles as possible is to spam the username endpoint with data from the previously mentioned breaches.
 
 There isn't a great amount of information about this topic yet, as there are only a few people doing this. However, I'm here to help! I'm going to show you how to scrape Minecraft profiles and get all the data you need. This will help me bring my yapping to a concrete form of text.
 

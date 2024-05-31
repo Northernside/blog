@@ -32,7 +32,7 @@ export function mdToHtml(article: Article): string {
         // Quotes
         .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
 
-        // if one line is empty, it's a new paragraph
+        // Empty lines
         .replace(/\n\n/g, "</p><p>");
 
     html = html.split('\n').map(line => {
