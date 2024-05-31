@@ -36,6 +36,12 @@ There are plenty of providers that offer /48 subnets for free or for a very low 
 ## Setting it up
 To start scraping Minecraft profiles, you need to have a server with a (preferably) /48 IPv6 subnet. Once you have that and did the proper setup, you can start scraping profiles. I will not provide you with the code to scrape profiles, as I don't want to be responsible for any misuse of the Mojang API. However, you won't need to write more than 250 lines of code to get it working. It is recommended to use a language that supports proper multi-threading.
 
+If you take a deeper look into the HTTP protocol, you'll notice that there is actually more than one version of it. The most common versions are HTTP/1.0, HTTP/1.1 and HTTP/2.0. The main difference between them is that HTTP/1.X is a text-based protocol, while HTTP/2.0 is binary-based.
+
+Apart from HTTP/2.0 being based on binary, it also supports multiplexing, which means that multiple requests can be sent and received at the same time through a single TCP connection. This is a huge advantage over HTTP/1.X, as they require a new TCP connection for each request. Reusing the same TCP connection for multiple requests is less CPU and memory intensive, which makes it faster and more efficient overall.
+
+As you can probably guess, the Mojang API supports HTTP/2.0, which means you should use it as well.
+
 ## My journey
 I started scraping Minecraft profiles back in 2023 when I joined an amazing group called "Fanclub". We do a lot of silly billies with the Mojang API (besides scraping profiles). At first, I was very inexprienced and didn't know what I was doing. I was trying to use proxies which charged me a lot of money and they weren't even working properly. After a few months, I finally grasped the potential of IPv6 subnets and started using them. At first, I was just using the free /64 subnet that Hetzner assigned to my server, but after a while, more and more rate limits were put onto the subnet. I then decided to get a /48 subnet from a tunnel broker and I've been using it ever since. Back then, I was able to hit about 100,000 usernames per minute, which isn't bad, especially when you consider that I was using JavaScript. Luckily not with Node.js, but with [Bun](https://bun.sh) (not sponsored, but I wish I was!).
 
