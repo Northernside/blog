@@ -61,4 +61,4 @@ I hope you enjoyed reading this article. If you have any questions or feedback, 
 
 Have a great day and happy scraping!
 
-*P.S.: Make sure to check out my friend's blogs as well: [How to Make a List of Nearly Every Minecraft Player](https://matdoes.dev/minecraft-uuids) by [matdoesdev](https://matdoes.dev).*
+*P.S.: Make sure to check out my friend's blog post as well: [How to Make a List of Nearly Every Minecraft Player](https://matdoes.dev/minecraft-uuids) by [matdoesdev](https://matdoes.dev).*
