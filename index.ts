@@ -13,10 +13,10 @@ let eightyEightByThirtyOnesHtml: string = load88x31sHtml();
 let imagesCache: { [key: string]: Buffer } = {};
 let pageIpCache: { [key: string]: string[] } = {};
 
-const homeHtml = fs.readFileSync("./html/home.html", "utf-8");
-const baseHtml = fs.readFileSync("./html/base.html", "utf-8");
-const statisticsHtml = fs.readFileSync("./html/stats.html", "utf-8");
-const notFoundHtml = fs.readFileSync("./html/404.html", "utf-8");
+let homeHtml = fs.readFileSync("./html/home.html", "utf-8");
+let baseHtml = fs.readFileSync("./html/base.html", "utf-8");
+let statisticsHtml = fs.readFileSync("./html/stats.html", "utf-8");
+let notFoundHtml = fs.readFileSync("./html/404.html", "utf-8");
 
 const cliArgs = process.argv.slice(2);
 const router = new Elysia();
@@ -116,6 +116,19 @@ if (cliArgs.includes("--watch")) {
     fs.watch("./articles", () => {
         console.log("Reloading articles...");
         blogPosts = initializeBlogPosts();
+    });
+
+    fs.watch("./media", () => {
+        console.log("Reloading media...");
+        imagesCache = {};
+    });
+
+    fs.watch("./html", () => {
+        console.log("Reloading HTML...");
+        homeHtml = fs.readFileSync("./html/home.html", "utf-8");
+        baseHtml = fs.readFileSync("./html/base.html", "utf-8");
+        statisticsHtml = fs.readFileSync("./html/stats.html", "utf-8");
+        notFoundHtml = fs.readFileSync("./html/404.html", "utf-8");
     });
 
     fs.watch("./88x31", () => {
