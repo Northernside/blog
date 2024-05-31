@@ -10,6 +10,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "elysia": "^1.0.22"
+    "elysia": "^1.0.22",
+    "lmdb": "^3.0.11"
   }
 }

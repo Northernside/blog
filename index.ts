@@ -5,11 +5,13 @@ import type { Article, EightyEightByThirtyOne } from "./types";
 import { articlesToRss, initializeBlogPosts } from "./misc/articles";
 import { load88x31s, load88x31sHtml } from "./misc/88x31";
 import { mdToHtml, mdToLiteHtml } from "./misc/markdown";
+import { addArticleView, getAllArticleViews, getUserIP } from "./misc/analytics";
 
 let blogPosts: Article[] = initializeBlogPosts();
 let eightyEightByThirtyOnes: EightyEightByThirtyOne[] = load88x31s();
 let eightyEightByThirtyOnesHtml: string = load88x31sHtml();
 let imagesCache: { [key: string]: Buffer } = {};
+let pageIpCache: { [key: string]: string[] } = {};
 
 const homeHtml = fs.readFileSync("./html/home.html", "utf-8");
 const baseHtml = fs.readFileSync("./html/base.html", "utf-8");
@@ -47,10 +49,16 @@ router.get("/88x31/:name", ({ set, params }) => {
 
 /* Article management */
 router.get("/api/articles", ({ }) => blogPosts);
-router.get("/article/:name", ({ set, params }) => {
+router.get("/article/:name", ({ set, params, request }) => {
     set.headers["Content-Type"] = "text/html";
     const article = blogPosts.find((article) => article.url_name === params.name);
     if (!article) { set.status = 404; return notFoundHtml; }
+
+    if (!pageIpCache[params.name]) pageIpCache[params.name] = [];
+    if (!pageIpCache[params.name].includes(getUserIP(request))) {
+        pageIpCache[params.name].push(getUserIP(request));
+        addArticleView(params.name);
+    }
 
     return baseHtml
         .replace("{{title}}", article.title)
@@ -102,3 +110,7 @@ if (cliArgs.includes("--watch")) {
         eightyEightByThirtyOnesHtml = load88x31sHtml();
     });
 }
+
+setInterval(() => {
+    pageIpCache = {};
+}, 5 * 60 * 1000);
