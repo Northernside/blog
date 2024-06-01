@@ -52,5 +52,5 @@ function convertTime(time: string): number {
     let [datePart, timePart] = time.split(" ");
     let [day, month, year] = datePart.split("/");
     let [hour, minute, second] = timePart.split(":");
-    return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`).getTime();
+    return new Date(+year, +month - 1, +day, +hour, +minute, +second).getTime();
 }
