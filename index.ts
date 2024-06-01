@@ -25,7 +25,7 @@ const router = new Elysia();
 router.get("/", ({ set }) => {
     set.headers["Content-Type"] = "text/html";
     const articles = blogPosts.map((article) =>
-        `<div class="article" published="${article.published}">
+        `<div class="article" published="${article.published}" onclick="openArticle('${article.url_name}')">
             <div class="preview-image" style="background: url(${article.meta_image});"></div>
                 <div class="article-information">
                     <div class="title-container">

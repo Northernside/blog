@@ -80,7 +80,7 @@
             background-color: rgb(41, 41, 41);
             border-radius: 10px;
             display: flex;
-
+            cursor: pointer;
         }
 
         .article-information {
@@ -127,7 +127,6 @@
             width: 40%;
             border-radius: 10px 0 0 10px;
             overflow: hidden;
-            cursor: pointer;
             background-position: center !important;
             background-size: 100% auto !important;
             transition: all 0.3s ease-in-out;
@@ -195,6 +194,10 @@
             if (match) {
                 return match[2]
             }
+        }
+
+        function openArticle(article_name) {
+            window.location.href = `/article/${article_name}`;
         }
     </script>
 </head>
