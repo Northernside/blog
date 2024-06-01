@@ -25,16 +25,20 @@ const router = new Elysia();
 router.get("/", ({ set }) => {
     set.headers["Content-Type"] = "text/html";
     const articles = blogPosts.map((article) =>
-        `<div class="article" published="${article.published}" onclick="openArticle('${article.url_name}')">
-            <div class="preview-image" style="background: url(${article.meta_image});"></div>
+        `
+        <a href="/article/${article.url_name}" style="text-decoration: none;">
+            <div class="article" published="${article.published}">
+                <div class="preview-image" style="background: url(${article.meta_image});"></div>
                 <div class="article-information">
                     <div class="title-container">
-                    <h4><a href="/article/${article.url_name}">${article.title}</a></h4>
-                    <span>(<span class="extended-date">published </span>${new Date(article.published).toLocaleDateString()})</span>
+                        <h4>${article.title}</h4>
+                        <span>(<span class="extended-date">published </span>${new Date(article.published).toLocaleDateString()})</span>
+                    </div>
+                    <p>${mdToLiteHtml(article.content.slice(0, 256))}...</p>
                 </div>
-                <p>${mdToLiteHtml(article.content.slice(0, 256))}...</p>
             </div>
-        </div>`
+        </a>
+        `
     ).join("");
 
     return homeHtml.replace("{{articles}}", articles).replace("{{88x31s}}", eightyEightByThirtyOnesHtml);
