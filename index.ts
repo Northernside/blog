@@ -30,7 +30,7 @@ router.get("/", ({ set }) => {
                 <div class="article-information">
                     <div class="title-container">
                     <h4><a href="/article/${article.url_name}">${article.title}</a></h4>
-                    <span>(published ${new Date(article.published).toLocaleDateString()})</span>
+                    <span>(<span class="extended-date">published </span>${new Date(article.published).toLocaleDateString()})</span>
                 </div>
                 <p>${mdToLiteHtml(article.content.slice(0, 256))}...</p>
             </div>

@@ -151,6 +151,28 @@
         .footer p {
             line-height: 0.5;
         }
+
+        @media screen and (max-width: 860px) {
+            .article {
+                flex-direction: column;
+            }
+
+            .preview-image {
+                width: 100%;
+                height: 200px;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .article-information {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .extended-date {
+                display: none;
+            }
+            
+        }
     </style>
     <script>
         window.onload = () => {
