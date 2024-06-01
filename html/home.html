@@ -59,6 +59,17 @@
             text-decoration: underline;
         }
 
+        label {
+            background-color: white;
+            color: black;
+            padding: 5px;
+            font-size: 12px;
+            border-radius: 4px;
+            font-weight: 800;
+            margin: 10px;
+            position: absolute;
+        }
+
         .articles {
             display: flex;
             flex-direction: column;
@@ -69,6 +80,7 @@
             background-color: rgb(41, 41, 41);
             border-radius: 10px;
             display: flex;
+
         }
 
         .article-information {
@@ -135,11 +147,34 @@
             margin-bottom: 25px;
             text-align: center;
         }
-        
+
         .footer p {
             line-height: 0.5;
         }
     </style>
+    <script>
+        window.onload = () => {
+            const articles = document.querySelectorAll('.article');
+            articles.forEach(article => {
+                article.getElementsByClassName("preview-image")[0].innerHTML += checkForNewContent(article.getAttribute('published')) ? '<label>NEW</label>' : '';
+            });
+            document.cookie = `lastVisit=${new Date().getTime()}; max-age=31536000; path=/`;
+        }
+
+        function checkForNewContent(timestamp) {
+            if (!getCookie('lastVisit')) return false;
+            const lastVisit = getCookie('lastVisit');
+            return lastVisit < timestamp;
+        }
+
+        function getCookie(name) {
+            const regex = new RegExp(`(^| )${name}=([^;]+)`)
+            const match = document.cookie.match(regex)
+            if (match) {
+                return match[2]
+            }
+        }
+    </script>
 </head>
 
 <body>

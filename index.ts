@@ -24,9 +24,8 @@ const router = new Elysia();
 /* Home */
 router.get("/", ({ set }) => {
     set.headers["Content-Type"] = "text/html";
-    
     const articles = blogPosts.map((article) =>
-        `<div class="article">
+        `<div class="article" published="${article.published}">
             <div class="preview-image" style="background: url(${article.meta_image});"></div>
                 <div class="article-information">
                     <div class="title-container">
