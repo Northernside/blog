@@ -59,10 +59,32 @@
             text-decoration: underline;
         }
 
+        label {
+            background-color: white;
+            color: black;
+            padding: 5px;
+            font-size: 12px;
+            border-radius: 4px;
+            font-weight: 800;
+            margin: 10px;
+            position: absolute;
+        }
+
         .articles {
             display: flex;
             flex-direction: column;
             gap: 20px;
+        }
+
+        .article {
+            background-color: rgb(41, 41, 41);
+            border-radius: 10px;
+            display: flex;
+            cursor: pointer;
+        }
+
+        .article-information {
+            padding: 20px;
         }
 
         ._88x31s {
@@ -81,13 +103,42 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin-bottom: -15px;
+            margin-bottom: 10px;
         }
 
         .title-container span {
-            margin-left: 10px;
+            margin-left: auto;
             color: gray;
             font-size: 12px;
+        }
+
+        .title-container h4 {
+            margin: 0;
+        }
+
+        .article p {
+            margin: 0;
+            font-size: 15px;
+            color: rgb(197, 197, 197);
+        }
+
+        .preview-image {
+            background-size: cover !important;
+            width: 40%;
+            border-radius: 10px 0 0 10px;
+            overflow: hidden;
+            background-position: center !important;
+            background-size: 100% auto !important;
+            transition: all 0.3s ease-in-out;
+
+        }
+
+        .article:hover .preview-image {
+            background-size: 110% auto !important;
+        }
+
+        .article-information {
+            width: 70%;
         }
 
         .footer {
@@ -95,18 +146,65 @@
             margin-bottom: 25px;
             text-align: center;
         }
-        
+
         .footer p {
             line-height: 0.5;
         }
+
+        @media screen and (max-width: 860px) {
+            .article {
+                flex-direction: column;
+            }
+
+            .preview-image {
+                width: 100%;
+                height: 200px;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .article-information {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .extended-date {
+                display: none;
+            }
+            
+        }
     </style>
+    <script>
+        window.onload = () => {
+            const articles = document.querySelectorAll('.article');
+            articles.forEach(article => {
+                article.getElementsByClassName("preview-image")[0].innerHTML += checkForNewContent(article.getAttribute('published')) ? '<label>NEW</label>' : '';
+            });
+            document.cookie = `lastVisit=${new Date().getTime()}; max-age=31536000; path=/`;
+        }
+
+        function checkForNewContent(timestamp) {
+            if (!getCookie('lastVisit')) return false;
+            const lastVisit = getCookie('lastVisit');
+            return lastVisit < timestamp;
+        }
+
+        function getCookie(name) {
+            const regex = new RegExp(`(^| )${name}=([^;]+)`)
+            const match = document.cookie.match(regex)
+            if (match) {
+                return match[2]
+            }
+        }
+    </script>
 </head>
 
 <body>
     <div class="container">
         <p><a href="/">Home</a></p>
         <h1>Northernside</h1>
-        <div class="articles">{{articles}}</div>
+        <div class="articles">
+            {{articles}}
+        </div>
         <div class="_88x31s">{{88x31s}}</div>
 
         <div class="footer">
